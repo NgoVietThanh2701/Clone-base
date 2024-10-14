@@ -1,5 +1,5 @@
 
-const img = document.querySelector('[data-token-bg]');
+const img_token = document.querySelector('[data-token-bg]');
 let previousScrollPosition = 0; // Lưu vị trí cuộn trước đó
 let rotationAngle = 0; // Lưu góc xoay của ảnh
 
@@ -17,7 +17,7 @@ window.addEventListener('scroll', function () {
     }
 
     // Xoay ảnh theo góc tính được
-    img.style.transform = `rotate(${rotationAngle}deg)`;
+    img_token.style.transform = `rotate(${rotationAngle}deg)`;
 
     // Cập nhật vị trí cuộn trước đó
     previousScrollPosition = currentScrollPosition;
@@ -83,5 +83,7 @@ window.addEventListener('scroll', function () {
 window.addEventListener('resize', function () {
     screenWidth = window.innerWidth;
 });
+
+
 
 

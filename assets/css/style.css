@@ -10,7 +10,7 @@
     --primary-color: #D4311B;
     --primary-text: #353535;
     --white: white;
-    --bg-header: rgba(25, 14, 53);
+    --bg-header: rgba(25, 14, 53, 0.35);
 
     --bg-width-65: 65vw;
     --bg-width-50: 50vw;
@@ -226,7 +226,6 @@ body {
 .hero {
     width: 100%;
     height: 100vh;
-    margin-top: 80px;
     background-image: url("../images/bg_root.webp");
     background-repeat: no-repeat;
     background-size: cover;
@@ -245,7 +244,7 @@ body {
     z-index: 1;
     width: calc(var(--bg-width-65) + 140px);
     height: auto;
-    top: 0;
+    top: calc(5% + 20px);
     right: calc(5% + 20px);
 }
 
@@ -253,16 +252,15 @@ body {
     position: absolute;
     z-index: 1;
     width: calc(var(--bg-width-45) * 0.8 + 100px);
-    top: 10px;
+    top: calc(7% + 20px);
     left: calc(-12% + 20px);
 }
 
 .hero .hero-cloud-2 {
     position: absolute;
     z-index: 1;
-    /* width: 900px; */
     width: calc(var(--bg-width-45) * 0.9 + 100px);
-    top: 70px;
+    top: calc(9% + 25px);
     right: calc(-7% + 10px);
 }
 
@@ -423,4 +421,20 @@ body {
     width: calc(var(--bg-width-45) + 50px);
     bottom: 160px;
     right: -8%;
+}
+
+.map_social-umbrella-1 {
+    position: absolute;
+    z-index: 1;
+    width: calc(var(--bg-width-45) / 6 + 50px);
+    bottom: calc(30% + 20px);
+    right: 37%;
+}
+
+.map_social-umbrella-2 {
+    position: absolute;
+    z-index: 2;
+    width: calc(var(--bg-width-45) / 6 + 50px);
+    bottom: calc(7% + 20px);
+    right: 7%;
 }

@@ -190,9 +190,12 @@ body {
     gap: 15px;
 }
 
-.header-btn-group button {
-    width: 35px;
+.header-btn-group .icon-box {
+    font-size: 30px;
+    padding: 3px;
     border-radius: 50%;
+    color: var(--white);
+    border: 1px solid var(--white);
 }
 
 .header-btn-group img {
@@ -210,7 +213,7 @@ body {
 
 .dog {
     position: absolute;
-    top: calc(5% + 25px);
+    top: calc(4% + 20px);
     right: calc(18% + 25px);
     z-index: 3;
     width: calc(var(--bg-width-45) /2.5 + 50px);
@@ -219,6 +222,30 @@ body {
 .dog img {
     max-width: 100%;
     max-width: 100%;
+}
+
+/* back to top */
+
+.back-top {
+    position: fixed;
+    bottom: 35px;
+    right: 23px;
+    z-index: 10;
+    padding: 10px;
+    cursor: pointer;
+    visibility: hidden;
+    transition: var(--transition);
+    border-radius: 50%;
+    background-color: #161840;
+}
+
+.back-top.active {
+    visibility: visible;
+}
+
+.back-top ion-icon {
+    font-size: 30px;
+    color: var(--white);
 }
 
 /* hero */
@@ -267,7 +294,7 @@ body {
 .hero .hero-logo {
     width: calc(var(--bg-width-45) * 0.77 + 85px);
     position: absolute;
-    top: calc(15% + 20px);
+    top: calc(20% + 30px);
     left: 45%;
     z-index: 9;
 }
@@ -384,11 +411,9 @@ body {
 }
 
 .map_social-bg {
-    position: absolute;
-    z-index: 0;
-    width: calc(var(--bg-width-65) * 1.1 + 70px);
-    top: 40px;
-    right: calc(5% + 60px);
+    width: calc(var(--bg-width-65) * 1.2 + 70px);
+    padding-top: 40px;
+    padding-left: calc(5% + 60px);
 }
 
 .map_social-cloud-7 {
@@ -437,4 +462,123 @@ body {
     width: calc(var(--bg-width-45) / 6 + 50px);
     bottom: calc(7% + 20px);
     right: 7%;
+}
+
+/* BUY & QA */
+
+.buy_fqa {
+    width: 100%;
+    background-color: #87CEEB;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center;
+    position: relative;
+}
+
+.buy_fqa div img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+.buy_fqa-bg {
+    width: 100%;
+}
+
+.buy_fqa-cloud-11 {
+    position: absolute;
+    z-index: 1;
+    width: calc(var(--bg-width-45) * 0.6 + 60px);
+    top: 10px;
+    left: -7%;
+}
+
+.buy_fqa-cloud-12 {
+    position: absolute;
+    z-index: 1;
+    width: calc(var(--bg-width-45) + 60px);
+    top: 50px;
+    right: -10%;
+}
+
+.buy_fqa-cloud-13 {
+    position: absolute;
+    z-index: 1;
+    width: calc(var(--bg-width-45) + 60px);
+    top: 28%;
+    left: -10%;
+}
+
+/* FOOTER */
+
+.footer {
+    background-color: #212121;
+    width: 100%;
+}
+
+.footer .container {
+    margin: auto;
+    width: 54%;
+    padding-block: 65px;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.footer-top .title {
+    color: var(--white);
+    font-size: 24px;
+    flex: auto;
+}
+
+.footer-logo {
+    width: 330px;
+}
+
+.footer-logo img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+.footer-contact {
+    margin-top: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+}
+
+.contact-left .info-coin {
+    color: var(--primary-color);
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    font-size: inherit;
+}
+
+.footer-contact .info-contact {
+    color: white;
+    font-size: inherit;
+    padding-bottom: 14px;
+}
+
+.contact-right {
+    width: 180px;
+}
+
+.contact-right li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.contact-right ion-icon {
+    color: var(--primary-color);
+    font-size: inherit;
+    margin-bottom: 15px;
 }

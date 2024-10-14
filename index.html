@@ -25,34 +25,31 @@
          <div class="navbar">
             <ul class="navbar-list">
                <li>
-                  <a href="#home" class="navbar-link" data-nav-link>TokenOmics</a>
+                  <a href="#" class="navbar-link" data-nav-link="token-omics">TokenOmics</a>
                </li>
                <li>
-                  <a href="#home" class="navbar-link" data-nav-link>RoadMap</a>
+                  <a href="#" class="navbar-link" data-nav-link="roadmap">RoadMap</a>
                </li>
                <li>
-                  <a href="#home" class="navbar-link" data-nav-link>FAQ</a>
+                  <a href="#" class="navbar-link" data-nav-link="fqa">FAQ</a>
                </li>
                <li>
-                  <a href="#home" class="navbar-link" data-nav-link>contact</a>
+                  <a href="#" class="navbar-link" data-nav-link>contact</a>
                </li>
                <li>
-                  <a href="#home" class="navbar-link" data-nav-link>Whitepaper</a>
+                  <a href="#" class="navbar-link" data-nav-link>Whitepaper</a>
                </li>
             </ul>
             <button>
-               <a href="#home" class="navbar-audit" data-nav-link>Audit</a>
+               <a href="#" class="navbar-audit" data-nav-link>Audit</a>
             </button>
             <button>
-               <a href="#home" class="navbar-staking" data-nav-link>Staking</a>
+               <a href="#" class="navbar-staking" data-nav-link>Staking</a>
             </button>
          </div>
          <div class="header-btn-group">
-            <button aria-label="Tele">
-               <img src="./assets/images/tele.svg" alt="Tele">
-            </button>
-            <button aria-label="Tele">
-               <img src="./assets/images/tele.svg" alt="Tele">
+            <button aria-label="Tele" class="icon-box">
+               <ion-icon name="logo-twitter"></ion-icon>
             </button>
          </div>
       </div>
@@ -61,6 +58,9 @@
    <main class="main">
       <div class="dog" data-dog>
          <img src="./assets/images/dog.webp" alt="">
+      </div>
+      <div class="back-top" data-back-top>
+         <ion-icon name="arrow-up-sharp"></ion-icon>
       </div>
       <div class="container">
 
@@ -77,13 +77,13 @@
             <div class="about-cloud-4"><img src="./assets/images/bg_cloud_4.webp" alt=""></div>
          </section>
 
-         <section class="token">
+         <section class="token" id="token-omics">
             <div class="token-bg" data-token-bg><img src="./assets/images/bg_3.webp" alt=""></div>
             <div class="token-cloud-5"><img src="./assets/images/bg_cloud_5.webp" alt=""></div>
             <div class="token-cloud-6"><img src="./assets/images/bg_cloud_6.webp" alt=""></div>
          </section>
 
-         <section class="map_social">
+         <section class="map_social" id="roadmap">
             <div class="map_social-bg"><img src="./assets/images/bg_4.webp" alt=""></div>
             <div class="map_social-cloud-7"><img src="./assets/images/bg_cloud_7.webp" alt=""></div>
             <div class="map_social-cloud-8"><img src="./assets/images/bg_cloud_8.webp" alt=""></div>
@@ -93,13 +93,54 @@
             <div class="map_social-umbrella-2"><img src="./assets/images/umbrella_2.webp" alt=""></div>
          </section>
 
-         <section class="buy_fqa">
+         <section class="buy_fqa" id="fqa">
             <div class="buy_fqa-bg"><img src="./assets/images/bg_5.webp" alt=""></div>
-            <div class="buy_fqa-cloud-7"><img src="./assets/images/bg_cloud_7.webp" alt=""></div>
-            <div class="buy_fqa-cloud-8"><img src="./assets/images/bg_cloud_8.webp" alt=""></div>
+            <div class="buy_fqa-cloud-11"><img src="./assets/images/bg_cloud_11.webp" alt=""></div>
+            <div class="buy_fqa-cloud-12"><img src="./assets/images/bg_cloud_12.webp" alt=""></div>
+            <div class="buy_fqa-cloud-13"><img src="./assets/images/bg_cloud_13.svg" alt=""></div>
          </section>
       </div>
    </main>
+
+   <footer class="footer">
+      <div class="container">
+         <div class="footer-top">
+            <p class="title">Base Dawgz is inspired by the iconic Shiba Inu meme, with its value driven entirely by its
+               cultural relevance and significance. And to all the would be Dawgz out there remember, cryptocurrency
+               markets are volitile and unpredictable. jump responsibly</p>
+            <div class="footer-logo">
+               <img src="./assets/images/logo_dog.webp" alt="">
+            </div>
+         </div>
+         <div class="footer-contact">
+            <ul class="contact-left">
+               <li>
+                  <a href="#" class="info-contact">Terms & Conditions</a>
+               </li>
+               <li>
+                  <a href="#" class="info-contact">PRIVE POLICY</a>
+               </li>
+               <li>
+                  <a href="#" class="info-coin">Coinsult Audit</a>
+               </li>
+            </ul>
+            <ul class="contact-right">
+               <li>
+                  <a href="#" class="info-contact">Contact</a>
+                  <ion-icon name="mail-outline"></ion-icon>
+               </li>
+               <li>
+                  <a href="#" class="info-contact">Dawgz Comms</a>
+                  <ion-icon name="logo-twitter"></ion-icon>
+               </li>
+               <li>
+                  <a href="#" class="info-contact">The Base</a>
+                  <ion-icon name="paper-plane-sharp"></ion-icon>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </footer>
 
    <!-- custome js link -->
    <script src="./assets/js/script.js"></script>

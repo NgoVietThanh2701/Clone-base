@@ -1,4 +1,6 @@
-
+/*
+*   IMAGE ROTATE
+*/
 const img_token = document.querySelector('[data-token-bg]');
 let previousScrollPosition = 0; // Lưu vị trí cuộn trước đó
 let rotationAngle = 0; // Lưu góc xoay của ảnh
@@ -24,29 +26,9 @@ window.addEventListener('scroll', function () {
 });
 
 
-// FLY DOG
-
-// const dog = document.querySelector('[data-dog]');
-
-// let rotationSpeed = 0.2;
-
-// window.addEventListener('scroll', function () {
-//     // Lấy giá trị vị trí cuộn hiện tại
-//     let currentScrollPosition = window.scrollY;
-
-//     // Tính góc xoay dựa trên vị trí cuộn hiện tại
-//     let rotationAngle_dog = currentScrollPosition * rotationSpeed; // Tính toán góc xoay trực tiếp theo vị trí cuộn
-
-//     // Giới hạn góc xoay trong khoảng 0 - 360 độ (tùy chọn, có thể không cần nếu không muốn giới hạn)
-//     rotationAngle_dog = rotationAngle_dog % 360;
-
-//     // Di chuyển ảnh theo tốc độ cuộn
-//     let translateY = currentScrollPosition;
-
-//     // Áp dụng cả xoay và di chuyển cho ảnh
-//     dog.style.transform = `translateY(${translateY}px) rotate(${rotationAngle_dog}deg)`;
-// });
-
+/*
+*  FLY DOG
+*/
 
 const dog = document.querySelector('[data-dog]');
 
@@ -84,6 +66,66 @@ window.addEventListener('resize', function () {
     screenWidth = window.innerWidth;
 });
 
+/*
+*   MOVE ELEMENT NAVBAR
+*/
 
+const navLinks = document.querySelectorAll('[data-nav-link]');
 
+navLinks.forEach(link => {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
 
+        const targetId = this.getAttribute('data-nav-link');
+
+        const targetSection = document.getElementById(targetId);
+
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+/* BACK TO TOP */
+
+const backTop = document.querySelector("[data-back-top]");
+
+backTop.addEventListener("scroll", function () {
+    if (window.scrollY >= 160) {
+        backTop.classList.add('active')
+    } else {
+        backTop.classList.remove('active')
+    }
+});
+
+backTop.addEventListener('click', (e) => {
+    e.preventDefault();
+    smoothScrollTo(0, 1350);
+});
+
+// Hàm cuộn mượt
+function smoothScrollTo(targetY, duration) {
+    const startY = window.scrollY; // Vị trí hiện tại
+    const distance = targetY - startY; // Khoảng cách cần cuộn
+    const startTime = performance.now(); // Thời gian bắt đầu
+
+    function scrollStep(currentTime) {
+        const elapsed = currentTime - startTime; // Thời gian đã trôi qua
+        const progress = Math.min(elapsed / duration, 1); // Tính tỷ lệ cuộn (0 đến 1)
+        const ease = easeInOutCubic(progress); // Tính toán hàm easing
+        window.scrollTo(0, startY + distance * ease); // Cuộn đến vị trí mới
+
+        if (elapsed < duration) {
+            requestAnimationFrame(scrollStep); // Gọi hàm tiếp theo
+        }
+    }
+
+    requestAnimationFrame(scrollStep); // Bắt đầu quá trình cuộn
+}
+
+// Hàm easing
+function easeInOutCubic(t) {
+    return t < 0.5 ?
+        4 * t * t * t :
+        1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+/* end back top*/

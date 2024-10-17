@@ -129,3 +129,77 @@ function easeInOutCubic(t) {
 }
 
 /* end back top*/
+
+
+
+/* CHART BIE */
+
+
+/* Phase of map_social */
+
+const phases = document.querySelectorAll('.phase');
+let isHiding = new Map(); // Biến trạng thái để theo dõi việc ẩn từng phần tử
+
+function checkVisibility() {
+    const windowHeight = window.innerHeight;
+
+    phases.forEach(phase => {
+        const phaseTop = phase.getBoundingClientRect().top;
+        const phaseBottom = phase.getBoundingClientRect().bottom;
+
+        // Chỉ định trạng thái cho từng phần tử
+        if (!isHiding.has(phase)) {
+            isHiding.set(phase, false); // Mặc định là không đang ẩn
+        }
+
+        // Kiểm tra nếu phần tử vào viewport
+        if (phaseTop < windowHeight && phaseBottom > 0) {
+            // Đảm bảo rằng phần tử đang visible
+            if (!phase.classList.contains('visible')) {
+                phase.classList.add('visible');
+                isHiding.set(phase, false); // Reset trạng thái khi hiện
+            }
+        }
+        // Kiểm tra nếu phần tử ra ngoài viewport theo chiều trên (kéo lên)
+        else if (phaseBottom < 0 && !isHiding.get(phase)) {
+            phase.classList.remove('visible');
+            isHiding.set(phase, true); // Đánh dấu rằng phần tử đang được ẩn
+        }
+    });
+}
+
+// Khi phần tử đã hoàn thành quá trình ẩn, reset lại trạng thái
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            isHiding.set(entry.target, false); // Reset trạng thái khi phần tử trở lại viewport
+        }
+    });
+});
+
+// Theo dõi tất cả các phần tử
+phases.forEach(phase => {
+    observer.observe(phase);
+});
+
+
+// Gọi hàm kiểm tra khi cuộn
+window.addEventListener('scroll', checkVisibility);
+// window.addEventListener('resize', checkVisibility);
+
+// Kiểm tra ngay khi tải trang
+checkVisibility();
+
+
+
+
+
+
+
+
+
+
+
+
+
+

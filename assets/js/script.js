@@ -26,11 +26,12 @@ window.addEventListener('scroll', function () {
 });
 
 
+
 /*
-*  FLY DOG
+*  FLY CAT MEME
 */
 
-const dog = document.querySelector('[data-dog]');
+const dog = document.querySelector('[data-cat-meme]');
 
 // Tốc độ xoay và tốc độ di chuyển ngang
 let rotationSpeed = 0.2;
@@ -40,7 +41,7 @@ let screenWidth = window.innerWidth;
 
 window.addEventListener('scroll', function () {
     // Lấy giá trị vị trí cuộn hiện tại
-    let currentScrollPosition = window.scrollY;
+    let currentScrollPosition = window.scrollY * 2;
 
     // Tính góc xoay dựa trên vị trí cuộn hiện tại
     let rotationAngle_dog = currentScrollPosition * rotationSpeed; // Tính toán góc xoay trực tiếp theo vị trí cuộn
@@ -50,8 +51,12 @@ window.addEventListener('scroll', function () {
     let translateX = currentScrollPosition * horizontalSpeed * direction;
 
     // Nếu ảnh chạm vào rìa màn hình, đảo ngược hướng
-    if (translateX > screenWidth - dog.clientWidth || translateX < 0) {
+    if (translateX > screenWidth - dog.clientWidth) {
+        translateX = screenWidth - dog.clientWidth; // Đặt lại translateX ở mép phải
         direction *= -1; // Đảo hướng khi chạm rìa
+    } else if (translateX < 0) {
+        translateX = 0; // Đặt lại translateX ở mép trái
+        direction = 1; // Đảo hướng sang phải
     }
 
     // Di chuyển theo chiều dọc và chiều ngang
@@ -66,6 +71,7 @@ window.addEventListener('resize', function () {
     screenWidth = window.innerWidth;
 });
 
+
 /*
 *   MOVE ELEMENT NAVBAR
 */
@@ -75,21 +81,24 @@ const navLinks = document.querySelectorAll('[data-nav-link]');
 navLinks.forEach(link => {
     link.addEventListener('click', function (event) {
         event.preventDefault();
-
         const targetId = this.getAttribute('data-nav-link');
-
         const targetSection = document.getElementById(targetId);
 
-        targetSection.scrollIntoView({ behavior: 'smooth' });
+        // targetSection.scrollIntoView({ behavior: 'smooth' });
+        if (targetSection) {
+            const targetY = targetSection.getBoundingClientRect().top + window.scrollY; // Tính toán vị trí Y
+            smoothScrollTo(targetY, 420); // Gọi hàm cuộn mượt với thời gian 1000ms
+        }
     });
 });
+
 
 /* BACK TO TOP */
 
 const backTop = document.querySelector("[data-back-top]");
 
-backTop.addEventListener("scroll", function () {
-    if (window.scrollY >= 160) {
+window.addEventListener("scroll", function () {
+    if (window.scrollY >= 199) {
         backTop.classList.add('active')
     } else {
         backTop.classList.remove('active')
@@ -98,7 +107,7 @@ backTop.addEventListener("scroll", function () {
 
 backTop.addEventListener('click', (e) => {
     e.preventDefault();
-    smoothScrollTo(0, 1350);
+    smoothScrollTo(0, 400);
 });
 
 // Hàm cuộn mượt
@@ -128,71 +137,107 @@ function easeInOutCubic(t) {
         1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-/* end back top*/
-
-
 
 /* CHART BIE */
+
+document.addEventListener("DOMContentLoaded", function () {
+    const pieChart = document.querySelector('.pie-chart');
+    const colors = [];
+    const percents = [];
+
+    // Lấy các giá trị từ thuộc tính data
+    for (let i = 1; i <= 6; i++) {
+        const color = pieChart.getAttribute(`data-color${i}`);
+        const percent = pieChart.getAttribute(`data-percent${i}`);
+        if (color && percent) {
+            colors.push(color);
+            percents.push(parseFloat(percent));
+        }
+    }
+
+    // Tạo gradient từ các giá trị
+    let gradient = 'conic-gradient(';
+    let currentStart = 0;
+
+    colors.forEach((color, index) => {
+        const start = currentStart;
+        const end = currentStart + percents[index];
+
+        // Thêm vào chuỗi gradient
+        gradient += `${color} ${start}% ${end - 1}%, rgba(255 255 255 / 0.75) ${end - 1}% ${end}%, `;
+
+        // Cập nhật currentStart cho phần tiếp theo
+        currentStart = end;
+    });
+    // Xóa dấu phẩy cuối
+    gradient = gradient.slice(0, -2) + ')';
+
+    pieChart.style.background = gradient;
+});
+
+
+
 
 
 /* Phase of map_social */
 
 const phases = document.querySelectorAll('.phase');
-let isHiding = new Map(); // Biến trạng thái để theo dõi việc ẩn từng phần tử
+var windowHeight = window.innerHeight;
+
+window.addEventListener('resize', function () {
+    windowHeight = window.innerHeight;
+});
+
+let ticking = false;
 
 function checkVisibility() {
-    const windowHeight = window.innerHeight;
 
     phases.forEach(phase => {
-        const phaseTop = phase.getBoundingClientRect().top;
-        const phaseBottom = phase.getBoundingClientRect().bottom;
+        const rect = phase.getBoundingClientRect();
+        const phaseTop = rect.top;
+        const phaseBottom = rect.bottom;
 
-        // Chỉ định trạng thái cho từng phần tử
-        if (!isHiding.has(phase)) {
-            isHiding.set(phase, false); // Mặc định là không đang ẩn
-        }
-
-        // Kiểm tra nếu phần tử vào viewport
-        if (phaseTop < windowHeight && phaseBottom > 0) {
-            // Đảm bảo rằng phần tử đang visible
-            if (!phase.classList.contains('visible')) {
-                phase.classList.add('visible');
-                isHiding.set(phase, false); // Reset trạng thái khi hiện
-            }
-        }
-        // Kiểm tra nếu phần tử ra ngoài viewport theo chiều trên (kéo lên)
-        else if (phaseBottom < 0 && !isHiding.get(phase)) {
+        if (phaseTop < 0 || (phaseTop < windowHeight && phaseBottom >= windowHeight)) {
+            phase.classList.add('visible');
+        } else if (phaseTop >= windowHeight) {
             phase.classList.remove('visible');
-            isHiding.set(phase, true); // Đánh dấu rằng phần tử đang được ẩn
         }
     });
 }
 
-// Khi phần tử đã hoàn thành quá trình ẩn, reset lại trạng thái
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            isHiding.set(entry.target, false); // Reset trạng thái khi phần tử trở lại viewport
+// Tối ưu cuộn với requestAnimationFrame
+function onScroll() {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            checkVisibility();
+            ticking = false;
+        });
+        ticking = true;
+    }
+}
+
+window.addEventListener('scroll', onScroll);
+
+checkVisibility();
+
+/*
+* click question & faq
+*/
+
+const questions = document.querySelectorAll(["[data-question]"]);
+
+questions[0].classList.add('active');
+
+questions.forEach(question => {
+    question.addEventListener('click', () => {
+        if (question.classList.contains('active')) {
+            question.classList.remove('active');
+        } else {
+            questions.forEach(q => q.classList.remove('active'));
+            question.classList.add('active');
         }
     });
 });
-
-// Theo dõi tất cả các phần tử
-phases.forEach(phase => {
-    observer.observe(phase);
-});
-
-
-// Gọi hàm kiểm tra khi cuộn
-window.addEventListener('scroll', checkVisibility);
-// window.addEventListener('resize', checkVisibility);
-
-// Kiểm tra ngay khi tải trang
-checkVisibility();
-
-
-
-
 
 
 

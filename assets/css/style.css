@@ -12,7 +12,7 @@
     --white: white;
     --black: #000;
     --bg-header: rgba(25, 14, 53, 0.6);
-    --bg-content: rgba(255 255 255 / 0.65);
+    --bg-content: rgba(255 255 255 / 0.75);
 
     --bg-width-65: 65vw;
     --bg-width-50: 50vw;
@@ -216,38 +216,36 @@ body {
 .cat_main {
     position: absolute;
     top: 290px;
-    right: calc(18% + 25px);
-    z-index: 3;
+    right: calc(20% + 25px);
+    z-index: 10;
     width: calc(var(--bg-width-45) /2.5 + 50px);
 }
 
 .cat_main img {
-    max-width: 100%;
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 /* back to top */
 
 .back-top {
     position: fixed;
-    bottom: 35px;
-    right: 23px;
+    bottom: 5px;
+    right: 0px;
     z-index: 10;
-    padding: 10px;
     cursor: pointer;
     visibility: hidden;
     transition: var(--transition);
-    border-radius: 50%;
-    background-color: #161840;
+    width: 125px;
 }
 
 .back-top.active {
     visibility: visible;
 }
 
-.back-top ion-icon {
-    font-size: 30px;
-    color: var(--white);
+.back-top img {
+    width: 100%;
+    height: auto;
 }
 
 /* hero */
@@ -506,12 +504,21 @@ body {
 .about-content>.title,
 .token-content>.title,
 .social_content>.title,
-.buy_content>.title {
+.buy_content>.title,
+.faq_content>.title,
+.contact_content .title {
     color: var(--primary-color);
     font-size: 66px;
     font-weight: var(--fw-600);
     margin-bottom: 12px;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.09em;
+    text-shadow:
+        0 0 5px white,
+        0 0 10px white,
+        0 0 15px white,
+        0 0 20px white,
+        0 0 25px white,
+        0 0 30px white;
 }
 
 .about-content .description,
@@ -651,6 +658,8 @@ body {
     color: inherit;
 }
 
+/* chart pie */
+
 .percent-right {
     flex: 55%;
     border-radius: 12px;
@@ -661,23 +670,28 @@ body {
     align-items: center;
 }
 
+.pie-chart {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+}
 
 
-
-
-
-/* .chart::after {
+.pie-chart::after {
     content: "";
     position: absolute;
     z-index: 4;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 46%;
-    height: 46%;
-    border: 3px solid #000;
+    width: 54%;
+    height: 54%;
     border-radius: 50%;
-} */
+    background-color: white;
+}
+
+
 
 /*
 * MAP & SOCIAL
@@ -782,7 +796,7 @@ body {
     /*  */
     opacity: 0;
     transform: translateY(-100vh);
-    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     will-change: transform, opacity;
 }
 
@@ -799,6 +813,13 @@ body {
     font-weight: var(--fw-600);
     rotate: -5deg;
     transform: translateX(-30px);
+    text-shadow:
+        0 0 7px white,
+        0 0 14px white,
+        0 0 21px white,
+        0 0 28px white,
+        0 0 35px white,
+        0 0 40px white;
 }
 
 .map_content .title span:last-child {
@@ -806,6 +827,13 @@ body {
     font-size: 56px;
     font-weight: var(--fw-600);
     margin-top: 30px;
+    text-shadow:
+        0 0 7px white,
+        0 0 14px white,
+        0 0 21px white,
+        0 0 28px white,
+        0 0 35px white,
+        0 0 40px white;
 }
 
 .map_content .phase>h4 {
@@ -883,7 +911,7 @@ body {
 
 /* BUY & QA */
 
-.buy_fqa {
+.buy_faq {
     width: 100%;
     background-color: #87CEEB;
     background-repeat: no-repeat;
@@ -892,17 +920,17 @@ body {
     position: relative;
 }
 
-.buy_fqa div img {
+.buy_faq div img {
     width: 100%;
     max-width: 100%;
     height: auto;
 }
 
-.buy_fqa-bg {
+.buy_faq-bg {
     width: 100%;
 }
 
-.buy_fqa-cloud-11 {
+.buy_faq-cloud-11 {
     position: absolute;
     z-index: 1;
     width: calc(var(--bg-width-45) * 0.6 + 60px);
@@ -910,7 +938,7 @@ body {
     left: -7%;
 }
 
-.buy_fqa-cloud-12 {
+.buy_faq-cloud-12 {
     position: absolute;
     z-index: 1;
     width: calc(var(--bg-width-45) + 60px);
@@ -918,7 +946,7 @@ body {
     right: -10%;
 }
 
-.buy_fqa-cloud-13 {
+.buy_faq-cloud-13 {
     position: absolute;
     z-index: 1;
     width: calc(var(--bg-width-45) + 60px);
@@ -979,7 +1007,111 @@ body {
     line-height: 28px;
 }
 
-/* FOOTER */
+/* FAQ */
+
+.faq_content {
+    position: absolute;
+    z-index: 3;
+    top: 30%;
+    left: 160px;
+    width: calc(86% + 60px);
+}
+
+.list-faq {
+    background-color: var(--bg-content);
+    width: calc(65% + 100px);
+    border-radius: 10px;
+    border: 4px solid var(--white);
+}
+
+.list-faq>ul {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    padding-block: 20px 12px;
+    padding-inline: 18px;
+    margin: 28px;
+}
+
+.list-faq>ul>li {
+    padding-block: 8px;
+}
+
+.list-faq .question {
+    padding: 6px 10px;
+    border-radius: 5px;
+}
+
+.list-faq .question>span {
+    color: var(--primary-color);
+    font-size: 42px;
+    font-weight: var(--fw-500);
+}
+
+.list-faq .question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.list-faq .question>ion-icon {
+    color: var(--primary-color);
+    font-size: 20px;
+}
+
+.list-faq .reply {
+    color: var(--black);
+    font-size: 30px;
+    letter-spacing: -0.05em;
+    padding: 14px;
+    /* hidden reply */
+    display: none;
+}
+
+.list-faq .question.active {
+    background-color: rgba(128, 128, 128, 0.26);
+}
+
+.list-faq .question.active+.reply {
+    display: block;
+}
+
+/* contact */
+
+.contact_content {
+    position: absolute;
+    z-index: 3;
+    bottom: 17%;
+    left: 160px;
+    width: calc(21% + 60px);
+}
+
+.list-contact>li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--bg-content);
+    border: 3px solid var(--white);
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin-top: 28px;
+    box-shadow: 0 0 7px white;
+}
+
+.list-contact>li ion-icon {
+    color: var(--primary-color);
+    font-size: 28px;
+}
+
+.list-contact>li>span {
+    color: var(--primary-text);
+    font-size: 36px;
+    letter-spacing: -0.08em;
+}
+
+/* 
+* FOOTER 
+*/
 
 .footer {
     background-color: #212121;

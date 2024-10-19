@@ -1,3 +1,16 @@
+
+/* DEMO WEBSITE */
+
+setTimeout(function () {
+    document.querySelector('.demo').style.display = 'none';
+    document.querySelector('.header').style.display = 'flex';
+    document.querySelector('.main').style.display = 'block';
+    document.querySelector('.footer').style.display = 'block';
+
+}, 5000);
+
+
+
 /*
 *   IMAGE ROTATE
 */
@@ -26,50 +39,70 @@ window.addEventListener('scroll', function () {
 });
 
 
-
 /*
 *  FLY CAT MEME
 */
 
-const dog = document.querySelector('[data-cat-meme]');
+// Tính toán vị trí mới cho hình ảnh
 
-// Tốc độ xoay và tốc độ di chuyển ngang
-let rotationSpeed = 0.2;
-let horizontalSpeed = 0.5; // Tốc độ di chuyển sang phải
-let direction = 1; // Hướng di chuyển (1 là sang phải, -1 là sang trái)
-let screenWidth = window.innerWidth;
+const catMain = document.querySelector('.cat_main');
+var direction = 1;
 
-window.addEventListener('scroll', function () {
-    // Lấy giá trị vị trí cuộn hiện tại
-    let currentScrollPosition = window.scrollY * 2;
+window.addEventListener('scroll', () => {
 
-    // Tính góc xoay dựa trên vị trí cuộn hiện tại
-    let rotationAngle_dog = currentScrollPosition * rotationSpeed; // Tính toán góc xoay trực tiếp theo vị trí cuộn
-    rotationAngle_dog = rotationAngle_dog % 360; // Giới hạn góc xoay trong khoảng 0 - 360 độ
+    let scrollY = window.scrollY;
+    let translateX = scrollY * 0.4 * direction; // Di chuyển chéo sang trái
+    let translateY = scrollY; // Di chuyển xuống chậm
+    let rotate = scrollY * 0.04;
 
-    // Tính toán vị trí di chuyển ngang
-    let translateX = currentScrollPosition * horizontalSpeed * direction;
+    // Lấy vị trí của catMain
+    const { left, right } = catMain.getBoundingClientRect();
+    const screenWidth = window.innerWidth;
 
-    // Nếu ảnh chạm vào rìa màn hình, đảo ngược hướng
-    if (translateX > screenWidth - dog.clientWidth) {
-        translateX = screenWidth - dog.clientWidth; // Đặt lại translateX ở mép phải
-        direction *= -1; // Đảo hướng khi chạm rìa
-    } else if (translateX < 0) {
-        translateX = 0; // Đặt lại translateX ở mép trái
-        direction = 1; // Đảo hướng sang phải
+    // Kiểm tra xem hình ảnh có chạm vào lề trái hoặc lề phải không
+
+    if (left < 0) {
+        // Chạm vào lề trái
+        console.log('Chạm vào lề trái');
+        direction = 1;
+    }
+    if (right > screenWidth) {
+        // Chạm vào lề phải
+        console.log('Chạm vào lề phải');
+        direction = -1;
     }
 
-    // Di chuyển theo chiều dọc và chiều ngang
-    let translateY = currentScrollPosition;
+    translateX = Math.max(Math.min(translateX, screenWidth + 20), 70);
 
-    // Áp dụng cả xoay và di chuyển cho ảnh
-    dog.style.transform = `translate(${translateX}px, ${translateY}px) rotate(-${rotationAngle_dog}deg)`;
+    catMain.style.transform = `translate(${translateX}px, ${translateY}px) rotate(-${rotate}deg)`;
 });
 
-// Cập nhật lại kích thước màn hình khi thay đổi kích thước cửa sổ
-window.addEventListener('resize', function () {
-    screenWidth = window.innerWidth;
+
+/* appear element */
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            } else if (entry.intersectionRatio < 0.1) {
+                entry.target.classList.remove('visible');
+            }
+        });
+    }, {
+        threshold: [0.1, 0.9],
+    });
+
+    const viewbox = document.querySelectorAll('[data-transform]');
+    viewbox.forEach(content => {
+        observer.observe(content);
+    })
 });
+
+
+
 
 
 /*
@@ -85,8 +118,13 @@ navLinks.forEach(link => {
         const targetSection = document.getElementById(targetId);
 
         // targetSection.scrollIntoView({ behavior: 'smooth' });
+
         if (targetSection) {
-            const targetY = targetSection.getBoundingClientRect().top + window.scrollY; // Tính toán vị trí Y
+            const sectionHeight = targetSection.offsetHeight;
+            const viewportHeight = window.innerHeight;
+            const offset = (viewportHeight - sectionHeight) / 2
+
+            const targetY = targetSection.getBoundingClientRect().top + window.scrollY - offset; // Tính toán vị trí Y
             smoothScrollTo(targetY, 420); // Gọi hàm cuộn mượt với thời gian 1000ms
         }
     });

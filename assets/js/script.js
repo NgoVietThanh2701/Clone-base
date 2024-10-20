@@ -7,8 +7,26 @@ setTimeout(function () {
     document.querySelector('.main').style.display = 'block';
     document.querySelector('.footer').style.display = 'block';
 
-}, 5000);
+}, 2850);
 
+
+/** BG_BOTTOM APPEAR */
+
+const appear_bg = document.querySelector('[data-appear-bg]');
+
+window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const imageHeight = appear_bg.offsetHeight;
+
+    // Tính toán tỉ lệ ẩn dần của hình ảnh
+    const scrollPercentage = Math.min(scrollY / (viewportHeight * 2), 1); // Đảm bảo tỉ lệ từ 0 đến 1
+
+    // Dịch chuyển hình ảnh vào trong bottom dựa trên tỉ lệ cuộn
+    const translateY = scrollPercentage * imageHeight;
+
+    appear_bg.style.transform = `translateY(${translateY}px)`;
+});
 
 
 /*
@@ -48,12 +66,14 @@ window.addEventListener('scroll', function () {
 const catMain = document.querySelector('.cat_main');
 var direction = 1;
 
+var paramRotate = 0.04;
+
 window.addEventListener('scroll', () => {
 
     let scrollY = window.scrollY;
     let translateX = scrollY * 0.4 * direction; // Di chuyển chéo sang trái
     let translateY = scrollY; // Di chuyển xuống chậm
-    let rotate = scrollY * 0.04;
+    let rotate = scrollY * paramRotate;
 
     // Lấy vị trí của catMain
     const { left, right } = catMain.getBoundingClientRect();
@@ -61,22 +81,17 @@ window.addEventListener('scroll', () => {
 
     // Kiểm tra xem hình ảnh có chạm vào lề trái hoặc lề phải không
 
-    if (left < 0) {
-        // Chạm vào lề trái
-        console.log('Chạm vào lề trái');
-        direction = 1;
-    }
     if (right > screenWidth) {
         // Chạm vào lề phải
         console.log('Chạm vào lề phải');
         direction = -1;
+        paramRotate = 0.009;
     }
 
-    translateX = Math.max(Math.min(translateX, screenWidth + 20), 70);
+    translateX = Math.max(Math.min(translateX, screenWidth + 10), 10);
 
     catMain.style.transform = `translate(${translateX}px, ${translateY}px) rotate(-${rotate}deg)`;
 });
-
 
 /* appear element */
 
@@ -100,10 +115,6 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(content);
     })
 });
-
-
-
-
 
 /*
 *   MOVE ELEMENT NAVBAR
@@ -213,50 +224,32 @@ document.addEventListener("DOMContentLoaded", function () {
     pieChart.style.background = gradient;
 });
 
+/* APPEAR ELEMENT PHASE */
 
+document.addEventListener('DOMContentLoaded', function () {
 
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const data_phase = entry.target.querySelector('[data-appear]');
+            const index = Array.from(entry.target.parentNode.children).indexOf(entry.target);
 
+            if (entry.isIntersecting) {
+                data_phase.style.transitionDelay = `${index * 250}ms`;
+                entry.target.classList.add('visible');
 
-/* Phase of map_social */
+            } else {
+                data_phase.style.transitionDelay = `${(entries.length - index) * 200}ms`;
+                entry.target.classList.remove('visible');
+            }
+        });
+    });
 
-const phases = document.querySelectorAll('.phase');
-var windowHeight = window.innerHeight;
-
-window.addEventListener('resize', function () {
-    windowHeight = window.innerHeight;
+    const data_box_phase = document.querySelectorAll('[data-box-appear]');
+    data_box_phase.forEach(content => {
+        observer.observe(content);
+    })
 });
 
-let ticking = false;
-
-function checkVisibility() {
-
-    phases.forEach(phase => {
-        const rect = phase.getBoundingClientRect();
-        const phaseTop = rect.top;
-        const phaseBottom = rect.bottom;
-
-        if (phaseTop < 0 || (phaseTop < windowHeight && phaseBottom >= windowHeight)) {
-            phase.classList.add('visible');
-        } else if (phaseTop >= windowHeight) {
-            phase.classList.remove('visible');
-        }
-    });
-}
-
-// Tối ưu cuộn với requestAnimationFrame
-function onScroll() {
-    if (!ticking) {
-        window.requestAnimationFrame(() => {
-            checkVisibility();
-            ticking = false;
-        });
-        ticking = true;
-    }
-}
-
-window.addEventListener('scroll', onScroll);
-
-checkVisibility();
 
 /*
 * click question & faq

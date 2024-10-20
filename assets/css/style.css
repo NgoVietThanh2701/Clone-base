@@ -19,7 +19,9 @@
     --bg-width-45: 45vw;
 
     /* typography */
-    --ff-roboto: '"Roboto", sans-serif';
+    /* --ff-primary: "Amita", serif; */
+    --ff-primary: "Roboto", sans-serif;
+    /* --ff-secondary: "Rock Salt", cursive; */
 
     --fs-1: calc(20px + 3.5vw);
     --fs-2: calc(18px + 1.6vw);
@@ -88,7 +90,7 @@ ion-icon {
 
 html,
 body {
-    font-family: var(--ff-roboto);
+    font-family: var(--ff-primary);
     scroll-behavior: smooth;
     overflow-x: hidden;
 }
@@ -103,6 +105,55 @@ body {
 .h2 {
     font-weight: var(--fw-800);
     text-transform: uppercase;
+}
+
+.transform {
+    opacity: 0;
+    transform: translateY(1px);
+    transition: opacity 0.85s ease, transform 0.4s ease;
+}
+
+.transform.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.appear {
+    opacity: 0;
+    transform: translateY(-100vh);
+    transition: opacity 0.5s ease-in-out, transform 0.35s ease-in-out;
+    will-change: transform, opacity;
+}
+
+.box-appear.visible .appear {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.title_page {
+    color: var(--primary-color);
+    font-size: 66px;
+    font-weight: var(--fw-600);
+    margin-bottom: 12px;
+    letter-spacing: -0.09em;
+    text-shadow:
+        0 0 5px white,
+        0 0 10px white,
+        0 0 15px white,
+        0 0 20px white,
+        0 0 25px white,
+        0 0 30px white;
+}
+
+.description_page {
+    color: var(--black);
+    font-size: 32px;
+    background-color: var(--bg-content);
+    border: 4px solid white;
+    border-radius: 12px;
+    padding: 13px;
+    line-height: 50px;
+    letter-spacing: -0.05em;
 }
 
 /*
@@ -128,34 +179,55 @@ body {
 
 .demo .image-demo {
     width: 400px;
-    animation: rotate-img 3s linear forwards, move-img 5s linear forwards 3s;
+    margin-right: 100px;
+    animation: fly 1.75s ease-in-out forwards,
+        rotateImg 0.45s 2s ease-in-out forwards,
+        moveDown 0.75s 2.2s ease-in-out forwards;
 }
 
-@keyframes rotate-img {
-    from {
-        transform: rotate(0deg);
+@keyframes fly {
+    0% {
+        transform: translateX(0) rotate(0deg);
+        /* Bắt đầu từ vị trí gốc */
     }
 
-
-    to {
-        transform: rotate(-140deg);
-        /* Giữ nguyên góc quay */
+    5% {
+        transform: translateX(-75px) rotate(-10deg);
+        /* Lượn sang trái một chút */
     }
-}
 
-@keyframes move-img {
-    quay con bug 0% {
-        transform: translateY(0);
-        /* Bắt đầu ở vị trí ban đầu */
+    50% {
+        transform: translateX(100px) rotate(-35deg);
+        /* Dịch chuyển sang phải */
     }
 
     100% {
-        transform: translateY(70vh);
-        /* Dịch chuyển xuống dưới */
+        transform: translateY(-75px) translateX(100px) rotate(-35deg);
+        /* Bay lên trên */
     }
 }
 
+@keyframes rotateImg {
+    0% {
+        transform: translateY(-75px) translateX(100px) rotate(-35deg);
+    }
 
+    100% {
+        transform: translateY(-75px) translateX(100px) rotate(-130deg);
+        /* Giữ nguyên vị trí Y,  Chỉ quay ảnh  */
+    }
+}
+
+@keyframes moveDown {
+    0% {
+        transform: translateY(-75px) translateX(100px) rotate(-130deg);
+        /* Bắt đầu từ vị trí kết thúc của rotateImg */
+    }
+
+    100% {
+        transform: translateY(calc(50vh + 280px)) translateX(100px) rotate(-130deg);
+    }
+}
 
 .demo img {
     width: 100%;
@@ -275,7 +347,7 @@ body {
 
 .cat_main {
     position: absolute;
-    top: 290px;
+    top: 320px;
     right: calc(20% + 25px);
     z-index: 10;
     width: calc(var(--bg-width-45) /2.5 + 50px);
@@ -287,6 +359,18 @@ body {
     width: 100%;
     height: 100%;
 }
+
+/* apprear bottom viewport bg */
+
+.apprear_bg {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    width: 100%;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
 
 /* back to top */
 
@@ -561,49 +645,6 @@ body {
     top: 100px;
     left: 130px;
     z-index: 3;
-    /* */
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-}
-
-.about_content.visible {
-    opacity: 1;
-    transform: translateY(0);
-    display: block;
-}
-
-.about_content>.title,
-.token-content>.title,
-.social_content>.title,
-.buy_content>.title,
-.faq_content>.title,
-.contact_content .title {
-    color: var(--primary-color);
-    font-size: 66px;
-    font-weight: var(--fw-600);
-    margin-bottom: 12px;
-    letter-spacing: -0.09em;
-    text-shadow:
-        0 0 5px white,
-        0 0 10px white,
-        0 0 15px white,
-        0 0 20px white,
-        0 0 25px white,
-        0 0 30px white;
-}
-
-.about_content .description,
-.token-content .description,
-.social_content .description {
-    color: var(--black);
-    font-size: 32px;
-    background-color: var(--bg-content);
-    border: 4px solid white;
-    border-radius: 12px;
-    padding: 13px;
-    line-height: 50px;
-    letter-spacing: -0.05em;
 }
 
 /*
@@ -864,15 +905,6 @@ body {
     border-radius: 8px;
     border: 5px solid var(--white);
     /*  */
-    opacity: 0;
-    transform: translateY(-80vh);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-    will-change: transform, opacity;
-}
-
-.map_content .phase.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* ---- */
@@ -948,15 +980,7 @@ body {
     bottom: 170px;
     left: 130px;
     z-index: 3;
-    /* transform */
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
 
-.social_content.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .social_content .collection {
@@ -1043,18 +1067,6 @@ body {
     width: calc(63% + 60px);
 }
 
-.buy_content .step>div {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.buy_content .step>div.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-
 .buy_content .step {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1063,7 +1075,7 @@ body {
     gap: 23px;
 }
 
-.buy_content .step>div {
+.buy_content .step .appear {
     background-color: var(--bg-content);
     border: 5px solid var(--white);
     border-radius: 10px;
@@ -1106,15 +1118,6 @@ body {
     top: 30%;
     left: 160px;
     width: calc(86% + 60px);
-    /* transale visible */
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.faq_content.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .list-faq {
